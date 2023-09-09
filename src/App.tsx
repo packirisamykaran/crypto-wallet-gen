@@ -1,11 +1,13 @@
 
 import { Keypair } from '@solana/web3.js';
 import { generateMnemonic, mnemonicToSeed } from 'bip39';
-import { Wallet, solanaWalletGen } from './utils/walletGenerators';
+import { EthereumWallet, SolanaWallet, solanaWalletGen } from './utils/walletGenerators';
 import { Buffer } from 'buffer';
 import React, { useState } from 'react';
 import { Box, Button, Select, Text, Spacer, VStack, useBreakpointValue } from '@chakra-ui/react';
 import { saveAs } from 'file-saver';
+
+
 
 
 
@@ -15,11 +17,11 @@ import { saveAs } from 'file-saver';
 
 function App() {
   const [selectedBlockchain, setSelectedBlockchain] = useState('Solana');
-  const [walletData, setWalletData] = useState<Wallet | null>(null);;
+  const [walletData, setWalletData] = useState<SolanaWallet | EthereumWallet | null>(null);;
 
   const generateWallet = async () => {
 
-    let wallet: Wallet = await solanaWalletGen()
+    let wallet: SolanaWallet = await solanaWalletGen()
     if (wallet != null) {
       setWalletData(wallet);
     } else {

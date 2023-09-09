@@ -1,14 +1,22 @@
 import { Keypair } from "@solana/web3.js";
 import { generateMnemonic, mnemonicToSeed } from "bip39";
+import { ethers } from "ethers";
+import { Wallet as ethWallet, utils } from "ethers";
 
-export interface Wallet {
+export interface SolanaWallet {
   publicKey: string;
   secretKeyBase58: string[];
   secretKeyText: string;
   recoveryPhrase: string;
 }
 
-export async function solanaWalletGen(): Promise<Wallet> {
+export interface EthereumWallet {
+  publicKey: string;
+  privateKey: string;
+  recoveryPhrase: string;
+}
+
+export async function solanaWalletGen(): Promise<SolanaWallet> {
   // Generate a BIP39 mnemonic (recovery phrase)
   const mnemonic = generateMnemonic();
 
@@ -17,18 +25,46 @@ export async function solanaWalletGen(): Promise<Wallet> {
   const keyPair = Keypair.fromSeed(seed.slice(0, 32)); // Use the first 32 bytes as the seed
   const secretKeyBuffer = Buffer.from(keyPair.secretKey);
 
-  // Generate wallet data here
+  // Generate SolanaWallet data here
   let publicKey = keyPair.publicKey.toBase58();
   let secretKeyBase58 = [keyPair.secretKey.toString()];
   let secretKeyText = secretKeyBuffer.toString("hex"); // Convert to plain text
   let recoveryPhrase = mnemonic;
 
-  let wallet: Wallet = {
+  let SolanaWallet: SolanaWallet = {
     publicKey,
     secretKeyBase58,
     secretKeyText,
     recoveryPhrase,
   };
 
-  return wallet;
+  return SolanaWallet;
+}
+
+export async function ethereumWalletGen(): Promise<EthereumWallet> {
+  // Generate a new Ethereum wallet
+  const wallet = ethWallet.createRandom();
+
+  // Extract the public key, private key, and mnemonic
+  const publicKey = wallet.address;
+  const privateKey = wallet.privateKey;
+  const recoveryPhrase = wallet.mnemonic?.phrase;
+
+  if (recoveryPhrase != null) {
+    const ethereumWallet: EthereumWallet = {
+      publicKey,
+      privateKey,
+      recoveryPhrase,
+    };
+
+    return ethereumWallet;
+  } else {
+    console.log("error generating ethereum wallet");
+    const ethereumWallet: EthereumWallet = {
+      publicKey: "",
+      privateKey: "",
+      recoveryPhrase: "",
+    };
+    return ethereumWallet;
+  }
 }
