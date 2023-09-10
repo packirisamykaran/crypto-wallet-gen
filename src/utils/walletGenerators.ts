@@ -16,6 +16,8 @@ export interface EthereumWallet {
   recoveryPhrase: string;
 }
 
+export type WalletTypes = SolanaWallet | EthereumWallet;
+
 export async function solanaWalletGen(): Promise<SolanaWallet> {
   // Generate a BIP39 mnemonic (recovery phrase)
   const mnemonic = generateMnemonic();

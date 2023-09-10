@@ -6,6 +6,10 @@ import { Buffer } from 'buffer';
 import React, { useState } from 'react';
 import { Box, Button, Select, Text, Spacer, VStack, useBreakpointValue } from '@chakra-ui/react';
 import { saveAs } from 'file-saver';
+import WalletDataLayout from "./components/WalletData"
+
+import { WalletTypes } from './utils/walletGenerators';
+
 
 
 
@@ -15,9 +19,12 @@ import { saveAs } from 'file-saver';
 (global as any).Buffer = Buffer;
 
 
+
+
+
 function App() {
   const [selectedBlockchain, setSelectedBlockchain] = useState('Solana');
-  const [walletData, setWalletData] = useState<SolanaWallet | EthereumWallet | null>(null);;
+  const [walletData, setWalletData] = useState<WalletTypes | null>(null);;
 
   const generateWallet = async () => {
 
@@ -69,23 +76,7 @@ function App() {
         </Button>
         {walletData && (
           <Box width="80%" maxWidth="400px" borderWidth="1px" p={4} borderRadius="md">
-            <Text fontWeight="bold" fontSize="lg">Wallet Data</Text>
-            <Spacer h="1rem" />
-            <Text>
-              <b>Public Key:</b> <span style={{ maxWidth: '100%' }}>{walletData.publicKey}</span>
-            </Text>
-            <Spacer h="1rem" />
-            <Text>
-              <b>Secret Key Base58:</b> <span style={{ maxWidth: '100%' }}>{walletData.secretKeyBase58}</span>
-            </Text>
-            <Spacer h="1rem" />
-            <Text>
-              <b>Secret Key Text:</b> <span style={{ maxWidth: '100%' }}>{walletData.secretKeyText}</span>
-            </Text>
-            <Spacer h="1rem" />
-            <Text>
-              <b>Recovery Phrase:</b> <span style={{ maxWidth: '100%' }}>{walletData.recoveryPhrase}</span>
-            </Text>
+            <WalletDataLayout walletData={walletData} />
             <Button
               size={buttonSize}
               colorScheme="blue"
