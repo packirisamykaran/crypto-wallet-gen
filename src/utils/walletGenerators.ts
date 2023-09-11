@@ -1,7 +1,7 @@
 import { Keypair } from "@solana/web3.js";
 import { generateMnemonic, mnemonicToSeed } from "bip39";
 import { ethers } from "ethers";
-import { Wallet as ethWallet, utils } from "ethers";
+import { Wallet as ethWallet } from "ethers";
 
 export interface SolanaWallet {
   publicKey: string;

@@ -1,13 +1,12 @@
 
 import { Keypair } from '@solana/web3.js';
 import { generateMnemonic, mnemonicToSeed } from 'bip39';
-import { EthereumWallet, SolanaWallet, solanaWalletGen } from './utils/walletGenerators';
+import { EthereumWallet, SolanaWallet, ethereumWalletGen, solanaWalletGen } from './utils/walletGenerators';
 import { Buffer } from 'buffer';
 import React, { useState } from 'react';
 import { Box, Button, Select, Text, Spacer, VStack, useBreakpointValue } from '@chakra-ui/react';
 import { saveAs } from 'file-saver';
 import WalletDataLayout from "./components/WalletData"
-
 import { WalletTypes } from './utils/walletGenerators';
 
 
@@ -28,11 +27,18 @@ function App() {
 
   const generateWallet = async () => {
 
-    let wallet: SolanaWallet = await solanaWalletGen()
+    let wallet: WalletTypes | null = null;
+    if (selectedBlockchain === "Solana") {
+      wallet = await solanaWalletGen()
+    }
+    else if (selectedBlockchain === "Ethereum") {
+      wallet = await ethereumWalletGen()
+    }
+
     if (wallet != null) {
       setWalletData(wallet);
     } else {
-      console.log("Wallet Generation Error")
+      console.log("Solana Wallet Generation Error")
     }
 
     // Store wallet data in state
@@ -53,6 +59,8 @@ function App() {
   return (
     <div className="App">
       <VStack spacing={4} align="center">
+        <Spacer h={"1rem"} />
+        <Spacer h={"1rem"} />
         <Text fontSize="xl">Crypto Wallet Generator</Text>
         <Select
           value={selectedBlockchain}
@@ -62,7 +70,7 @@ function App() {
           variant="filled"
         >
           <option value="Ethereum">Ethereum</option>
-          <option value="Bitcoin">Bitcoin</option>
+          <option value="Solana">Solana</option>
           {/* Add more blockchain options here */}
         </Select>
         <Button
@@ -88,6 +96,8 @@ function App() {
             </Button>
           </Box>
         )}
+        <Spacer h={"1rem"} />
+        <Spacer h={"1rem"} />
       </VStack>
     </div >
   );
