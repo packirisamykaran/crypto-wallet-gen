@@ -1,5 +1,6 @@
 {
   "name": "crypto-wallet-gen",
+  "homepage": "https://yourusername.github.io/crypto-wallet-gen",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -29,7 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +54,7 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
-    "@types/jquery": "^3.5.18"
+    "@types/jquery": "^3.5.18",
+    "gh-pages": "^6.0.0"
   }
 }
