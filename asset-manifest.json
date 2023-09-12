@@ -1,0 +1,12 @@
+{
+  "files": {
+    "main.js": "/crypto-wallet-gen/static/js/main.e284cc02.js",
+    "static/js/787.62649f82.chunk.js": "/crypto-wallet-gen/static/js/787.62649f82.chunk.js",
+    "index.html": "/crypto-wallet-gen/index.html",
+    "main.e284cc02.js.map": "/crypto-wallet-gen/static/js/main.e284cc02.js.map",
+    "787.62649f82.chunk.js.map": "/crypto-wallet-gen/static/js/787.62649f82.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.e284cc02.js"
+  ]
+}
